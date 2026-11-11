@@ -91,6 +91,19 @@ export const LiveMap: React.FC<LiveMapProps> = ({ messages, className = 'h-64 w-
 
       mapInstanceRef.current = map;
     }
+
+    return () => {
+      if (mapInstanceRef.current) {
+        try {
+          mapInstanceRef.current.remove();
+        } catch {}
+        mapInstanceRef.current = null;
+      }
+      markersRef.current = {};
+      polylinesRef.current = [];
+      circlesRef.current = [];
+      distanceTagsRef.current = [];
+    };
   }, []);
 
   // Update Riders, Safety Auras, and Distance Vector Polylines
